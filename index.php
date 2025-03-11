@@ -129,7 +129,7 @@ require_once 'scripts/connection.php';
 				  
 				  <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="password" placeholder="AdHocPayment"  name="password" required >
+                    <input type="password" class="form-control" id="password" placeholder="AdHocPayment"  name="password" required >
                     <label for="floatingName"><b>Password:</b></label>
 				  <div class="valid-feedback">
                     Looks good!
