@@ -1,7 +1,6 @@
-
 <?php
 require_once '../scripts/connection.php';
-$ii = $_POST['MemberID'];
+$ii = $_POST['c_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,168 +116,145 @@ justify-content: center;
     
 <?php
 if(count($_POST)>0){
-        
-$stmt = $conn->prepare("SELECT * from tblmembers where MemberID = '$ii' ");
-						$stmt->execute();
-						$result = $stmt->get_result();
-						if ($result->num_rows > 0) {
-						    while($row = $result->fetch_assoc()) {
-						  // output data of each row
-						 ?>
-		<table class="table datatable"  id="free" width="100%">
-			<thead>
-                  <tr>
-                    <th scope="col" colspan="6"><img src="header.PNG" width="100%"></th>
-                   
-                    </tr>
-                   	<tr style="text-align: center; background: black; color: white;">
-                    <th scope="col" colspan="6">MEMBER DETAILS</th>
-                   
-                    </tr>
-                    <tr>
-                    <th colspan="2" scope="col" style="">Full Name: <?php echo $row['MemberFirstname']." ".$row['MemberSurname']; ?></th>
-                   
-                    <th colspan="2" scope="col" style="">MemberNo: <?php echo $row['MemberNo']; ?></th>
-					
-					<th colspan="2" scope="col" style="">National ID: <?php echo $row['MemberIDnumber']; ?></th>
-					
-					</tr>
-					
-					
-					<tr>
-                    <th colspan="2" scope="col" style="">Date of Birth: <?php echo $row['DateOfBirth']; ?></th>
-                   
-                    <th colspan="2" scope="col" style="">Account Opened: <?php echo $row['DateAccountOpened']; ?></th>
-					
-					 <th colspan="2" scope="col" style="">Postal Address: <?php echo $row['MemberPostalAddress']; ?></th>
-					
-					</tr>
-					
-						<tr>
-                    <th colspan="2" scope="col" style="">Approved Benefit :<?php echo "E ". number_format($row['ApprovedBenefit'], 2); ?></th>
-                    
-                    <th colspan="2" scope="col" style="">Terminated: <?php if($row['Terminated'] == '1') echo "Yes"; else echo "No" ; ?></th>
-					
-					 
-					<?php
-					 $stmt12 = $conn->prepare("SELECT `NewBalance` from `balances` where  `memberID` = '$ii' ");
-						$stmt12->execute();
-						$result12 = $stmt12->get_result();
-						if ($result12->num_rows > 0) {
-						    while($row12 = $result12->fetch_assoc()) {
-?>
-			<th  colspan="2" scope="col" style="">Balance :<?php echo "E ". number_format($row12['NewBalance'], 2); ?></th>
-<?php
-							}}else{
-								?>
-								<th colspan="2" scope="col" style="">Balance :<?php echo "No Balance Retrieved "; ?></th>
-								<?php	
-							}
-?>		
-					</tr>
-				<tr style="text-align: center; background: black; color: white;">
-                    <th scope="col" colspan="6">Account Summary   [<?php echo date('d-M-Y')?>]</th>
-                   
-                    </tr>	
-					</thead>
-					</table>
-					
-<?php
-
-
-}}    
     
-    
-$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where  TransactionTypeID = '1' AND memberID = '$ii' ");
-						$stmt12->execute();
-						$result12 = $stmt12->get_result();
-						if ($result12->num_rows > 0) {
-						    while($row12 = $result12->fetch_assoc()) {
-						  // output data of each row
-						 // $sum = $sum + $row12['TT3'] ;
-						 ?>
-		<table class="table datatable"  id="free" width="100%">
-			<thead>
-                  
-                   
-                    <tr>
-                    <th colspan="3" scope="col" style="border: 0;" style=" text-align: left;">Transfer In</th>
-                    <td colspan="3" scope="col" style="text-align: right; border: 0;"><?php echo "E ". number_format($row12['TT3'], 2); ?></td>
-                    </tr>
-</thead>
- <?php
- 	}
-	?>
-</table>
-<?php
-	} else {
-echo "0 results";	
-}   
-
-
-$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where  TransactionTypeID = '2' AND memberID = '$ii' ");
-						$stmt12->execute();
-						$result12 = $stmt12->get_result();
-						if ($result12->num_rows > 0) {
-						    while($row12 = $result12->fetch_assoc()) {
-						  // output data of each row
-						 // $sum = $sum + $row12['TT3'] ;
-						 ?>
-		<table class="table datatable"  id="free" width="100%">
-			<thead>
-                  
-                   
-                    <tr>
-                    <th colspan="3" scope="col" style="border: 0;" style=" text-align: left;">Transfer In Fee</th>
-                    <td colspan="3" scope="col" style="text-align: right; border: 0;"><?php echo "E ". number_format($row12['TT3'], 2); ?></td>
-                    </tr>
-</thead>
- <?php
- 	}
-	?>
-</table>
-<?php
-	} else {
-echo "0 results";	
-}    
-   
-     
-$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where  TransactionTypeID IN ('9' ) AND memberID = '$ii' ");
-						$stmt12->execute();
-						$result12 = $stmt12->get_result();
-						if ($result12->num_rows > 0) {
-						    while($row12 = $result12->fetch_assoc()) {
-						  // output data of each row
-						 // $sum = $sum + $row12['TT3'] ;
-						 ?>
-		<table class="table datatable"  id="free" width="100%">
-			<thead>
-                  
-                   
-                    <tr>
-                    <th colspan="3" scope="col" style="border: 0;" style=" text-align: left;">Additional Capital</th>
-                    <td colspan="3" scope="col"  style="text-align: right; border: 0;"><?php echo "- E ". number_format($row12['TT3'], 2); ?></td>
-                    </tr>
-</thead>
- <?php	}
-	?>
-</table>
-<?php	} else {
-echo "0 results";	}    
- 
- 
-
-
+$stmt = $conn->prepare("SELECT tblmembers.*, mbr_deceased.FundNames 
+                        FROM tblmembers 
+                        LEFT JOIN mbr_deceased ON tblmembers.MemberID = mbr_deceased.MemberID 
+                        WHERE tblmembers.MemberID = '$ii'");
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
 ?>
-  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+<div class="table-responsive">
+    <table class="table datatable" id="free">
+        <thead>
+            <tr>
+                <th scope="col" colspan="6"><img src="header.PNG" width="100%"></th>
+            </tr>
+            <tr style="text-align: center; background: black; color: white;">
+                <th scope="col" colspan="6">MEMBER DETAILS</th>
+            </tr>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Full Name</th>
+                <td scope="col"><?php echo $row['MemberFirstname']." ".$row['MemberSurname']; ?></td>
+                <th scope="col" style="vertical-align: top;">MemberNo</th>
+                <td scope="col"><?php echo $row['MemberNo']; ?></td>
+                <th scope="col" style="vertical-align: top;">National ID</th>
+                <td scope="col"><?php echo $row['MemberIDnumber']; ?></td>
+            </tr>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Date of Birth</th>
+                <td scope="col"><?php echo $row['DateOfBirth']; ?></td>
+                <th scope="col" style="vertical-align: top;">Account Opened</th>
+                <td scope="col"><?php echo $row['DateAccountOpened']; ?></td>
+                <th scope="col" style="vertical-align: top;">Fund Name</th>
+                <td scope="col"><?php echo $row['FundNames']; ?></td>
+            </tr>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Approved Benefit</th>
+                <td scope="col" style="font-weight: bold;"><?php echo "E ". number_format($row['ApprovedBenefit'], 2); ?></td>
+                <th scope="col" style="vertical-align: top;">Terminated</th>
+                <td scope="col"><?php echo $row['Terminated']; ?></td>
+                <th scope="col" style="vertical-align: top;">Balance</th>
+                <?php
+                $stmt12 = $conn->prepare("SELECT `NewBalance` from `balances` where `memberID` = '$ii' ");
+                $stmt12->execute();
+                $result12 = $stmt12->get_result();
+                if ($result12->num_rows > 0) {
+                    while($row12 = $result12->fetch_assoc()) {
+                ?>
+                <td scope="col" style="font-weight: bold;"><?php echo "E ". number_format($row12['NewBalance'], 2); ?></td>
+                <?php
+                    }}else{
+                ?>
+                <td scope="col" style="font-weight: bold;"><?php echo "No data";?></td>
+                <?php    
+                    }
+                ?>        
+            </tr>
+            <tr style="text-align: center; background: black; color: white;">
+                <th scope="col" colspan="6">Account Summary   [<?php echo date('d-M-Y')?>]</th>
+            </tr>    
+        </thead>
+    </table>
+</div>
+<?php
+    }
+}
 
-<?php						
-						
+$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where TransactionTypeID = '1' AND memberID = '$ii' ");
+$stmt12->execute();
+$result12 = $stmt12->get_result();
+if ($result12->num_rows > 0) {
+    while($row12 = $result12->fetch_assoc()) {
+?>
+<div class="table-responsive">
+    <table class="table datatable" id="free">
+        <thead>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Initial Transfer In</th>
+                <td scope="col" style="text-align: right;"><?php echo "E ". number_format($row12['TT3'], 2); ?></td>
+            </tr>
+        </thead>
+    </table>
+</div>
+<?php
+    }
+} else {
+    echo "0 results";
+}
+
+$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where TransactionTypeID = '2' AND memberID = '$ii' ");
+$stmt12->execute();
+$result12 = $stmt12->get_result();
+if ($result12->num_rows > 0) {
+    while($row12 = $result12->fetch_assoc()) {
+?>
+<div class="table-responsive">
+    <table class="table datatable" id="free">
+        <thead>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Transfer In Fee</th>
+                <td scope="col" style="text-align: right;"><?php echo "E ". number_format($row12['TT3'], 2); ?></td>
+            </tr>
+        </thead>
+    </table>
+</div>
+<?php
+    }
+} else {
+    echo "0 results";
+}
+
+$stmt12 = $conn->prepare("SELECT SUM(`Amount`) AS `TT3` from `tblmemberaccounts` where TransactionTypeID IN ('9' ) AND memberID = '$ii' ");
+$stmt12->execute();
+$result12 = $stmt12->get_result();
+if ($result12->num_rows > 0) {
+    while($row12 = $result12->fetch_assoc()) {
+?>
+<div class="table-responsive">
+    <table class="table datatable" id="free">
+        <thead>
+            <tr>
+                <th scope="col" style="vertical-align: top;">Additional Capital</th>
+                <td scope="col" style="text-align: right;"><?php echo " E ". number_format($row12['TT3'], 2); ?></td>
+            </tr>
+        </thead>
+    </table>
+</div>
+<?php
+    }
+} else {
+    echo "0 results";
+}
+?>
+<script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+<?php
 } else {
   header('location: ./');
 }
-
-
 ?>
 <footer>
      <img src="footer.PNG" width="100%">
