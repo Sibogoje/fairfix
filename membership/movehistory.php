@@ -1,4 +1,3 @@
-
 <?php
 require_once '../scripts/connection.php';
 $ii = $_POST['c_id'];
@@ -40,8 +39,8 @@ $stmt = $conn->prepare("SELECT * from tblmembers where MemberID = '$ii' ");
                     <td scope="col"><?php echo $row['DateOfBirth']; ?></td>
                     <th scope="col" style="vertical-align: top;">Account Opened</th>
 					<td scope="col"><?php echo $row['DateAccountOpened']; ?></td>
-					 <th scope="col" style="vertical-align: top;">Postal Address</th>
-					<td scope="col"><?php echo $row['MemberPostalAddress']; ?></td>
+					 <th scope="col" style="vertical-align: top;">Fund Name</th>
+					<td scope="col"><?php echo $row['FundNames']; ?></td>
 					</tr>
 					
 						<tr>
