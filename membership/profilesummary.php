@@ -6,7 +6,10 @@ $ii = $_POST['c_id'];
 if(count($_POST)>0){
     
         
-$stmt = $conn->prepare("SELECT * from `tblmembers` where `MemberID` = '$ii' ");
+$stmt = $conn->prepare("SELECT tblmembers.*, mbr_deceased.FundNames 
+                        FROM tblmembers 
+                        LEFT JOIN mbr_deceased ON tblmembers.MemberID = mbr_deceased.MemberID 
+                        WHERE tblmembers.MemberID = '$ii'");
 						$stmt->execute();
 						$result = $stmt->get_result();
 						if ($result->num_rows > 0) {
