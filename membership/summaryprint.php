@@ -1,4 +1,3 @@
-
 <?php
 require_once '../scripts/connection.php';
 $ii = $_POST['MemberID'];
@@ -123,13 +122,15 @@ td {
 <?php
 if(count($_POST)>0){
         
-$stmt = $conn->prepare("SELECT * from `tblmembers` where `MemberID` = '$ii' ");
-						$stmt->execute();
-						$result = $stmt->get_result();
-						if ($result->num_rows > 0) {
-						    while($row = $result->fetch_assoc()) {
-						  // output data of each row
-						 ?>
+$stmt = $conn->prepare("SELECT tblmembers.*, mbr_deceased.FundNames 
+                        FROM tblmembers 
+                        LEFT JOIN mbr_deceased ON tblmembers.MemberID = mbr_deceased.MemberID 
+                        WHERE tblmembers.MemberID = '$ii'");
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+?>
 		<table class="table datatable"  id="free" width="100%" style="text-align: left;">
 			<thead>
                   <tr>
@@ -158,7 +159,7 @@ $stmt = $conn->prepare("SELECT * from `tblmembers` where `MemberID` = '$ii' ");
 					
 					<tr>
 					    <th scope="col" colspan="3" style="vertical-align: top;">Account Opened:  <span style="font-weight: normal;"><?php echo $row['DateAccountOpened']; ?></span></th>
-					    <th scope="col" colspan="3" style="vertical-align: top;">Postal Address: <span style="font-weight: normal;"> <?php echo $row['MemberPostalAddress']; ?></span></th>
+					    <th scope="col" colspan="3" style="vertical-align: top;">Fund Name: <span style="font-weight: normal;"> <?php echo $row['FundNames']; ?></span></th>
 					   
 					</tr>
 					
