@@ -36,7 +36,7 @@ try {
     }
 
     // Extract transactions from tblmemberaccounts between 2017-08-01 and 2017-08-31
-    $query = "SELECT * FROM tblmemberaccountsCOPYFROM WHERE TransactionDate BETWEEN '2025-01-16' AND '2025-02-31' ORDER BY TransactionDate";
+    $query = "SELECT * FROM tblmemberaccountsMONDAY2 WHERE TransactionDate BETWEEN '2024-10-01' AND '2024-10-31' ORDER BY TransactionDate";
     $transactions = execute_query($connection, $query);
     if (empty($transactions)) {
         throw new Exception("No transactions returned from the query.");
