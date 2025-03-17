@@ -50,7 +50,7 @@ require_once 'scripts/connection.php';
 
   <!-- ======= Header ======= -->
   <?php 
-  //include 'header.php';
+  include 'header.php';
   ?>
 
   <main id="main" class="main">
